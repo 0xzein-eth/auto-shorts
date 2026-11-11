@@ -1,15 +1,15 @@
 # Auto Shorts
 
-Automated Indonesian YouTube Shorts factory: generate a short script with OpenAI, synthesize Indonesian narration with Edge TTS, render a vertical MP4 with Remotion, and optionally publish it to YouTube.
+Automated Indonesian YouTube Shorts factory: generate a script with OpenAI, synthesize Indonesian narration with Edge TTS, render a vertical MP4 with Remotion, and optionally publish it to YouTube.
 
 ## Pipeline
-1. Pick a topic from `src/data/topics.json`.
-2. Generate script metadata and scenes into `src/data/today.json`.
-3. Generate narration at `public/voiceover.mp3`.
-4. Render a 1080×1920 MP4 to `out/video.mp4`.
-5. Optionally upload as **unlisted** to YouTube.
+1. Select a topic while avoiding the most recently used topics.
+2. Generate and validate a 4–6 scene Indonesian script.
+3. Generate Indonesian narration.
+4. Render a 1080×1920 video with animated backgrounds, timed scene cards, subtitles, and a progress indicator.
+5. Optionally upload to YouTube as **unlisted**.
 
-The initial renderer uses animated graphic backgrounds rather than third-party footage.
+The renderer currently uses original motion-graphic layouts, not third-party footage. This avoids unlicensed clips and keeps the pipeline reproducible.
 
 ## Local setup
 Requirements: Node.js 20+, Python 3.10+, FFmpeg.
@@ -25,8 +25,10 @@ npm run render
 ## GitHub Actions
 Add repository Actions secrets:
 - `OPENAI_API_KEY` (required)
-- `YT_CLIENT_ID`, `YT_CLIENT_SECRET`, `YT_REFRESH_TOKEN` (optional; all three enable upload)
+- `YT_CLIENT_ID`, `YT_CLIENT_SECRET`, `YT_REFRESH_TOKEN` (optional; all three enable YouTube upload)
 
 Run **Actions → Daily Auto Video → Run workflow** to test. The schedule is 09:00 WIB daily (02:00 UTC). Without YouTube secrets, the workflow still renders and stores the MP4 artifact for 7 days.
+
+The workflow updates `src/data/topic-history.json` after selecting a topic so recent topics are less likely to repeat. It requires the repository Actions setting **Workflow permissions: Read and write permissions** for the default `GITHUB_TOKEN`.
 
 OpenAI API usage is billed separately. Review outputs before enabling public publishing. Respect copyright and only use media you have rights to use.
