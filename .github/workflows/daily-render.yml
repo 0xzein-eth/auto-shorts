@@ -27,10 +27,6 @@ jobs:
         run: npm install
       - name: Install Edge TTS
         run: python3 -m pip install --break-system-packages edge-tts
-      - name: Generate script
-        run: npm run generate
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       - name: Restore and persist topic history
         uses: actions/cache@v4
         with:
@@ -38,6 +34,10 @@ jobs:
           key: topic-history-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: |
             topic-history-
+      - name: Generate script
+        run: npm run generate
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       - name: Generate voiceover
         run: npm run voice
       - name: Render video
