@@ -1,0 +1,12 @@
+{
+  "title": "Contoh Video Pendek",
+  "description": "Video pendek otomatis.",
+  "scenes": [
+    {
+      "text": "Ini adalah contoh video otomatis."
+    },
+    {
+      "text": "Jalankan workflow untuk membuat naskah baru."
+    }
+  ]
+}
