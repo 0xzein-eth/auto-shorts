@@ -18,7 +18,7 @@ const Scene: React.FC<{text: string; index: number; total: number; title: string
   const enter = spring({frame, fps, config: {damping: 18, stiffness: 85}});
   const drift = Math.sin(frame / 34) * 22;
   const progress = interpolate(frame, [0, 30 * Math.max(5, Math.floor(30 / total))], [0, 1], {extrapolateRight: 'clamp'});
-  const words = text.trim().split(/\\s+/).length;
+  const words = text.trim().split(/\s+/).length;
   const fontSize = words > 15 ? 58 : words > 11 ? 66 : 74;
 
   return (
