@@ -32,7 +32,7 @@ const data = JSON.parse(raw);
 if (typeof data.title !== 'string' || !data.title.trim() || data.title.length > 100) throw new Error('Generated title is missing or too long.');
 if (typeof data.description !== 'string' || !Array.isArray(data.scenes) || data.scenes.length < 4 || data.scenes.length > 6) throw new Error('Generated script has invalid structure.');
 data.scenes = data.scenes.map(scene => ({text: String(scene.text ?? '').replace(/\s+/g, ' ').trim()}));
-if (data.scenes.some(scene => scene.text.split(/\\s+/).length < 5 || scene.text.split(/\\s+/).length > 22)) throw new Error('A scene is too short or too long; refusing to render low-quality script.');
+if (data.scenes.some(scene => scene.text.split(/\s+/).length < 5 || scene.text.split(/\s+/).length > 22)) throw new Error('A scene is too short or too long; refusing to render low-quality script.');
 data.topic = topic;
 await fs.writeFile('src/data/today.json', JSON.stringify(data, null, 2) + '\n');
 history.push(topic);
