@@ -1,3 +1,3 @@
 import {registerRoot} from 'remotion';
-import {ShortVideo} from './compositions/ShortVideo';
-registerRoot(() => ShortVideo);
+import {RemotionRoot} from './Root';
+registerRoot(RemotionRoot);
