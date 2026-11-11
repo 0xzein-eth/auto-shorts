@@ -34,7 +34,6 @@ jobs:
       - name: Render video
         run: npm run render
       - name: Upload to YouTube (optional)
-        if: ${{ secrets.YT_CLIENT_ID != '' && secrets.YT_CLIENT_SECRET != '' && secrets.YT_REFRESH_TOKEN != '' }}
         run: npm run upload
         env:
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
