@@ -15,5 +15,5 @@ const data=JSON.parse(raw);
 if(typeof data.title!=='string'||!Array.isArray(data.scenes)||data.scenes.length<3) throw new Error('Generated script has invalid structure.');
 data.scenes=data.scenes.slice(0,6).map(s=>({text:String(s.text??'').trim()}));
 if(data.scenes.some(s=>!s.text)) throw new Error('Generated scene is empty.');
-await fs.writeFile('src/data/today.json',JSON.stringify(data,null,2)+'\\n');
+await fs.writeFile('src/data/today.json',JSON.stringify(data,null,2)+'\n');
 console.log('Generated:',data.title,'| Topic:',topic);
