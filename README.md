@@ -29,6 +29,6 @@ Add repository Actions secrets:
 
 Run **Actions → Daily Auto Video → Run workflow** to test. The schedule is 09:00 WIB daily (02:00 UTC). Without YouTube secrets, the workflow still renders and stores the MP4 artifact for 7 days.
 
-The workflow updates `src/data/topic-history.json` after selecting a topic so recent topics are less likely to repeat. It requires the repository Actions setting **Workflow permissions: Read and write permissions** for the default `GITHUB_TOKEN`.
+GitHub Actions cache preserves `src/data/topic-history.json` between runs, so recent topics are less likely to repeat without requiring write access to the repository.
 
 OpenAI API usage is billed separately. Review outputs before enabling public publishing. Respect copyright and only use media you have rights to use.
