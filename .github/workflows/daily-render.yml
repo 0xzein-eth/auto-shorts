@@ -1,0 +1,50 @@
+name: Daily Auto Video
+on:
+  schedule:
+    - cron: '0 2 * * *' # 09:00 WIB
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: daily-auto-video
+  cancel-in-progress: false
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg python3-pip
+      - name: Install Node dependencies
+        run: npm install
+      - name: Install Edge TTS
+        run: python3 -m pip install --break-system-packages edge-tts
+      - name: Generate script
+        run: npm run generate
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      - name: Generate voiceover
+        run: npm run voice
+      - name: Render video
+        run: npm run render
+      - name: Upload to YouTube (optional)
+        if: ${{ secrets.YT_CLIENT_ID != '' && secrets.YT_CLIENT_SECRET != '' && secrets.YT_REFRESH_TOKEN != '' }}
+        run: npm run upload
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+      - name: Save rendered video artifact
+        if: always() && hashFiles('out/video.mp4') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: auto-shorts-${{ github.run_number }}
+          path: out/video.mp4
+          retention-days: 7
