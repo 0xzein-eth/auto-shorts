@@ -1,0 +1,23 @@
+{
+  "name": "auto-shorts",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "node scripts/generate-script.mjs",
+    "voice": "node scripts/text-to-speech.mjs",
+    "render": "remotion render src/index.ts ShortVideo out/video.mp4",
+    "upload": "node scripts/upload-youtube.mjs"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.410",
+    "googleapis": "^144.0.0",
+    "openai": "^4.77.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.410"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  }
+}
